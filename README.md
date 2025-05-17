@@ -21,6 +21,7 @@ It supports basic admin login and full CRUD (Create, Read, Update, Delete) opera
 
 ## 📂 Folder Structure
 
+```bash
 employee-management/
 ├── models/
 │ └── Employee.js

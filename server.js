@@ -23,8 +23,9 @@ app.use(session({
 app.use(flash());
 
 app.use((req, res, next) => {
-  res.locals.success_msg = req.flash('success_msg');
-  res.locals.error_msg = req.flash('error_msg');
+  res.locals.success = req.flash('success')[0];
+  res.locals.error = req.flash('error')[0];
+  res.locals.user = req.session.user || null;
   next();
 });
 
@@ -46,7 +47,11 @@ app.use('/employees', require('./routes/employees'));
 
 // Basic redirect route
 app.get('/', (req, res) => {
-  res.redirect('/employees');
+  if (req.session.user) {
+    res.redirect('/dashboard');
+  } else {
+    res.redirect('/login');
+  }
 });
 
 // Start server

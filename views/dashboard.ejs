@@ -1,23 +1,90 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Dashboard</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-</head>
-<body class="container mt-5">
+<%
+const content = `
+<div class="row mb-4">
+  <div class="col-12">
+    <div class="card text-white" style="background-color: rgb(9, 77, 109);">
+      <div class="card-body">
+        <h2 class="card-title">
+          <i class="fas fa-user-circle me-2"></i>Welcome, ${user.email}!
+        </h2>
+        <p class="card-text">
+          <span class="badge bg-light text-primary">
+            <i class="fas fa-user-shield me-1"></i>${user.role === 'admin' ? 'Administrator' : 'User'}
+          </span>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
 
-  <h1>Welcome, <%= user.username %>!</h1>
+<div class="row mb-4" style="margin-bottom: 300px;">
+  <div class="col-md-4" style="margin-bottom: 30px;">
+    <div class="card h-100">
+      <div class="card-body text-center">
+        <i class="fas fa-users fa-2x text-primary mb-3"></i>
+        <h5 class="card-title">Employee Management</h5>
+        <p class="card-text">View and manage all employees in the system</p>
+        <a href="/employees" class="btn btn-primary">
+          <i class="fas fa-users me-2"></i>Manage Employees
+        </a>
+      </div>
+    </div>
+  </div>
+  
+  ${user.role === 'admin' ? `
+    <div class="col-md-4" style="margin-bottom: 30px;">
+      <div class="card h-100">
+        <div class="card-body text-center">
+          <i class="fas fa-user-plus fa-2x text-success mb-3"></i>
+          <h5 class="card-title">Add New Employee</h5>
+          <p class="card-text">Create a new employee record</p>
+          <a href="/employees/new" class="btn btn-success">
+            <i class="fas fa-user-plus me-2"></i>Add Employee
+          </a>
+        </div>
+      </div>
+    </div>
+  ` : ''}
+  
+  <div class="col-md-4" style="margin-bottom: 30px;">
+    <div class="card h-100">
+      <div class="card-body text-center">
+        <i class="fas fa-sign-out-alt fa-2x text-danger mb-3"></i>
+        <h5 class="card-title">Logout</h5>
+        <p class="card-text">Sign out from your account</p>
+        <a href="/logout" class="btn btn-danger">
+          <i class="fas fa-sign-out-alt me-2"></i>Logout
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
 
-  <% if (success_msg) { %>
-    <div class="alert alert-success"><%= success_msg %></div>
-  <% } %>
+<!-- <div class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">
+          <i class="fas fa-info-circle me-2"></i>Quick Actions
+        </h5>
+        <div class="list-group">
+          <a href="/employees" class="list-group-item list-group-item-action">
+            <i class="fas fa-list me-2"></i>View All Employees
+          </a>
+          ${user.role === 'admin' ? `
+            <a href="/employees/new" class="list-group-item list-group-item-action">
+              <i class="fas fa-user-plus me-2"></i>Add New Employee
+            </a>
+          ` : ''}
+          <a href="/logout" class="list-group-item list-group-item-action text-danger">
+            <i class="fas fa-sign-out-alt me-2"></i>Logout
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->
+`;
+%>
 
-  <% if (error_msg) { %>
-    <div class="alert alert-danger"><%= error_msg %></div>
-  <% } %>
-
-  <a href="/employees" class="btn btn-success">Manage Employees</a>
-  <a href="/logout" class="btn btn-danger">Logout</a>
-
-</body>
-</html>
+<%- include('layout', { content, success: success, error: error }) %> 
